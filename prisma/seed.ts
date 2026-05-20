@@ -1,11 +1,8 @@
 import "dotenv/config";
 import { PrismaClient } from "../src/generated/prisma/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
+import { PrismaNeon } from "@prisma/adapter-neon";
 
-const adapter = new PrismaLibSql({
-  url: process.env.DATABASE_URL || "file:./prisma/dev.db",
-});
-
+const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
 
 const services = [
@@ -20,7 +17,6 @@ const services = [
 ];
 
 async function main() {
-  // Clear existing data
   await prisma.booking.deleteMany();
   await prisma.service.deleteMany();
 
