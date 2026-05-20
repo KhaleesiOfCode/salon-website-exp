@@ -39,3 +39,41 @@ model Booking {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
+
+model StaffMember {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String
+  bio       String?
+  image     String?
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id           Int      @id @default(autoincrement())
+  customerName String
+  customerImage String?
+  rating       Int      @default(5)
+  text         String
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+model FAQ {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
+  category  String   @default("Generale")
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model ClosedDay {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  reason    String?
+  createdAt DateTime @default(now())
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useLocale } from "@/lib/i18n/context";
 
 interface Service {
   id: number;
@@ -10,6 +11,7 @@ interface Service {
 }
 
 export function SelectedServicesSummary({ selectedIds }: { selectedIds: number[] }) {
+  const { t } = useLocale();
   const [services, setServices] = useState<Service[]>([]);
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export function SelectedServicesSummary({ selectedIds }: { selectedIds: number[]
     <div className="mx-auto mt-10 max-w-2xl">
       <div className="rounded-2xl border border-burgundy/20 bg-burgundy/5 p-6">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-burgundy/60">
-          Servizi Selezionati
+          {t.booking.selectedServices}
         </p>
         <div className="space-y-2">
           {selected.map((s) => (
@@ -41,7 +43,7 @@ export function SelectedServicesSummary({ selectedIds }: { selectedIds: number[]
           ))}
         </div>
         <div className="mt-3 text-right text-sm text-charcoal/50">
-          Totale: <span className="font-medium text-burgundy">&euro;{total.toFixed(2)}</span>
+          {t.booking.total}: <span className="font-medium text-burgundy">&euro;{total.toFixed(2)}</span>
           {" / "}
           {duration} min
         </div>

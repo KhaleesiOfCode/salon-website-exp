@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale } from "@/lib/i18n/context";
 import { ServicesSection } from "./ServicesSection";
 import { BookingForm } from "./BookingForm";
 import { SelectedServicesSummary } from "./SelectedServicesSummary";
@@ -11,9 +12,11 @@ interface Service {
   description: string | null;
   price: number;
   duration: number;
+  image?: string | null;
 }
 
 export function PageClient({ grouped }: { grouped: Record<string, Service[]> }) {
+  const { t } = useLocale();
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [showBooking, setShowBooking] = useState(false);
 
@@ -44,13 +47,13 @@ export function PageClient({ grouped }: { grouped: Record<string, Service[]> }) 
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
           <div className="mx-auto max-w-2xl text-center">
             <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-gold-dark/70">
-              Prenotazione
+              {t.booking.title}
             </p>
             <h2 className="font-serif text-4xl font-light text-charcoal sm:text-5xl">
-              Prenota un Appuntamento
+              {t.booking.title}
             </h2>
             <p className="mx-auto mt-3 max-w-lg text-sm font-light text-charcoal/50">
-              Compila il modulo e ti contatteremo per confermare la disponibilit&agrave;.
+              {t.booking.subtitle}
             </p>
           </div>
 

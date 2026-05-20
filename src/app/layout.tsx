@@ -1,9 +1,38 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { PublicShell } from "@/components/PublicShell";
+
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://bellezzasaloon.it";
 
 export const metadata: Metadata = {
-  title: "Bellezza Salon — Alta Bellezza Italiana",
-  description: "Scopri i nostri trattamenti di acconciatura, estetica e benessere. Prenota il tuo appuntamento online.",
+  title: {
+    default: "Bellezza Salon — Alta Bellezza Italiana",
+    template: "%s | Bellezza Salon",
+  },
+  description:
+    "Scopri i nostri trattamenti esclusivi di acconciatura, estetica e benessere a Milano. Prenota il tuo appuntamento online da Bellezza Salon.",
+  keywords: ["salone bellezza", "acconciatura Milano", "estetica", "benessere", "parrucchiere Milano", "trattamenti capelli", "manicure", "pedicure"],
+  authors: [{ name: "Bellezza Salon" }],
+  openGraph: {
+    type: "website",
+    locale: "it_IT",
+    siteName: "Bellezza Salon",
+    title: "Bellezza Salon — Alta Bellezza Italiana",
+    description:
+      "Scopri i nostri trattamenti esclusivi di acconciatura, estetica e benessere. Prenota il tuo appuntamento online.",
+    url: baseUrl,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bellezza Salon — Alta Bellezza Italiana",
+    description:
+      "Scopri i nostri trattamenti esclusivi di acconciatura, estetica e benessere. Prenota il tuo appuntamento online.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  metadataBase: new URL(baseUrl),
 };
 
 export default function RootLayout({
@@ -13,61 +42,42 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it" className="h-full scroll-smooth antialiased" suppressHydrationWarning>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "HairSalon",
+              name: "Bellezza Salon",
+              image: `${baseUrl}/og-image.jpg`,
+              "@id": baseUrl,
+              url: baseUrl,
+              telephone: "+39 02 1234 5678",
+              email: "info@bellezzasaloon.it",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Via Roma 42",
+                addressLocality: "Milano",
+                postalCode: "20121",
+                addressCountry: "IT",
+              },
+              openingHoursSpecification: [
+                { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "19:00" },
+                { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:00", closes: "18:00" },
+              ],
+              priceRange: "€€",
+              description: "Salone di alta bellezza a Milano specializzato in acconciatura, estetica e benessere.",
+            }),
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" />
-        <header className="fixed top-0 z-50 w-full border-b border-gold/10 bg-ivory/90 backdrop-blur-md">
-          <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-            <a href="#hero" className="font-serif text-xl font-medium tracking-wide text-charcoal" suppressHydrationWarning>
-              Bellezza Salon
-            </a>
-            <div className="flex items-center gap-10 text-sm">
-              <a
-                href="#servizi"
-                className="relative text-charcoal/50 transition-colors duration-300 hover:text-burgundy after:absolute after:-bottom-1 after:left-0 after:h-[1.5px] after:w-0 after:bg-gold after:transition-all after:duration-500 hover:after:w-full"
-              >
-                Servizi
-              </a>
-              <a
-                href="#prenota"
-                className="relative text-charcoal/50 transition-colors duration-300 hover:text-burgundy after:absolute after:-bottom-1 after:left-0 after:h-[1.5px] after:w-0 after:bg-gold after:transition-all after:duration-500 hover:after:w-full"
-              >
-                Prenota
-              </a>
-            </div>
-          </nav>
-        </header>
-        <main className="flex-1">{children}</main>
-        <footer className="border-t border-gold/10 bg-charcoal px-6 py-16">
-          <div className="mx-auto max-w-6xl">
-            <div className="grid gap-12 sm:grid-cols-3">
-              <div>
-                <h3 className="font-serif text-xl text-ivory">Bellezza Salon</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ivory/50">
-                  Dal 2010, cura e bellezza nel cuore dell&apos;Italia. Trattamenti esclusivi per valorizzare la tua bellezza naturale.
-                </p>
-              </div>
-              <div>
-                <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">Link</h4>
-                <ul className="space-y-3 text-sm text-ivory/50">
-                  <li><a href="#servizi" className="transition-colors hover:text-gold">Servizi</a></li>
-                  <li><a href="#prenota" className="transition-colors hover:text-gold">Prenota</a></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">Contatti</h4>
-                <ul className="space-y-3 text-sm text-ivory/50">
-                  <li>Via Roma 42, Milano</li>
-                  <li>+39 02 1234 5678</li>
-                  <li className="text-gold/70">info@bellezzasaloon.it</li>
-                  <li>Lun&ndash;Sab: 9:00 &ndash; 19:00</li>
-                </ul>
-              </div>
-            </div>
-            <div className="mt-12 border-t border-gold/10 pt-8 text-center text-xs text-ivory/30">
-              &copy; {new Date().getFullYear()} Bellezza Salon &mdash; Tutti i diritti riservati
-            </div>
-          </div>
-        </footer>
+        <PublicShell>{children}</PublicShell>
       </body>
     </html>
   );

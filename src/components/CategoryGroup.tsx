@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale } from "@/lib/i18n/context";
 
 interface Service {
   id: number;
@@ -8,6 +9,7 @@ interface Service {
   description: string | null;
   price: number;
   duration: number;
+  image?: string | null;
 }
 
 export function CategoryGroup({
@@ -23,6 +25,7 @@ export function CategoryGroup({
   onToggle: (id: number) => void;
   defaultOpen?: boolean;
 }) {
+  const { t } = useLocale();
   const [open, setOpen] = useState(defaultOpen);
 
   return (
@@ -87,7 +90,7 @@ export function CategoryGroup({
                         : "border-gold/30 text-gold-dark hover:border-gold hover:bg-gold hover:text-white"
                     }`}
                   >
-                    {isSelected ? "Selezionato" : "Seleziona"}
+                    {isSelected ? t.services.selectedLabel : t.services.selectLabel}
                   </span>
                 </div>
               </button>
