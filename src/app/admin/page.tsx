@@ -5,13 +5,14 @@ import { prisma } from "@/lib/db";
 import AdminLogoutButton from "@/components/AdminLogoutButton";
 
 export default async function AdminPage() {
+  const safeCount = async (fn: () => Promise<number>) => { try { return await fn(); } catch { return 0; } };
   const [serviceCount, bookingCount, pendingCount, staffCount, reviewCount, faqCount] = await Promise.all([
-    prisma.service.count(),
-    prisma.booking.count(),
-    prisma.booking.count({ where: { status: "pending" } }),
-    prisma.staffMember.count(),
-    prisma.review.count(),
-    prisma.fAQ.count(),
+    safeCount(() => prisma.service.count()),
+    safeCount(() => prisma.booking.count()),
+    safeCount(() => prisma.booking.count({ where: { status: "pending" } })),
+    safeCount(() => prisma.staffMember.count()),
+    safeCount(() => prisma.review.count()),
+    safeCount(() => prisma.fAQ.count()),
   ]);
 
   return (
