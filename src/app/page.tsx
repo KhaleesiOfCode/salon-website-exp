@@ -23,10 +23,11 @@ const defaultServices = [
 export default async function Home() {
   let services: Awaited<ReturnType<typeof prisma.service.findMany>> = [];
   try {
-    services = await prisma.service.findMany({
+    const dbServices = await prisma.service.findMany({
       where: { active: true },
       orderBy: { category: "asc" },
     });
+    services = dbServices.length > 0 ? dbServices : defaultServices as unknown as typeof dbServices;
   } catch {
     services = defaultServices as unknown as Awaited<ReturnType<typeof prisma.service.findMany>>;
   }
